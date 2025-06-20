@@ -26,26 +26,28 @@ public class MovieController {
         System.out.println("movie");
         return new ResponseEntity<Movie>(movieService.saveMovie(movie), HttpStatus.CREATED);
     }
-   // @GetMapping("/allmovies")
-//    public List<Movie> getAllMovies()
-//    {
-//        return movieService.getAllMovies();
-//    }
+
     @GetMapping("/allmovies")
-    public ResponseEntity<?> getAllMovies() {
-        try {
-            List<Movie> movies = movieService.getAllMovies();
-
-            if (movies == null || movies.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No movies found");
-            }
-
-            return ResponseEntity.ok(movies);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error retrieving movies: " + e.getMessage());
-        }
+    public List<Movie> getAllMovies()
+    {
+        return movieService.getAllMovies();
     }
+
+//    @GetMapping("/allmovies")
+//    public ResponseEntity<?> getAllMovies() {
+//        try {
+//            List<Movie> movies = movieService.getAllMovies();
+//
+//            if (movies == null || movies.isEmpty()) {
+//                return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No movies found");
+//            }
+//
+//            return ResponseEntity.ok(movies);
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body("Error retrieving movies: " + e.getMessage());
+//        }
+//    }
 //    @GetMapping("{id}")
 //    public ResponseEntity<Movie> getMovieById(@PathVariable("id")int id)
 //    {
