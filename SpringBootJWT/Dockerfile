@@ -15,16 +15,34 @@
 
 
 
-# Stage 1: Build the app using Maven
+# Stage 1: Build the app using Maven and JDK
 FROM maven:3.9.4-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY . .
 RUN mvn clean package -Dmaven.test.skip=true
 
-# Stage 2: Run the app using a lightweight JDK image
+# Stage 2: Run the app with a smaller JDK image
 FROM eclipse-temurin:17-jdk
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
+EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
+
+
+
+
+
+# # Stage 1: Build the app using Maven
+# FROM maven:3.9.4-eclipse-temurin-17 AS build
+# WORKDIR /app
+# COPY . .
+# RUN mvn clean package -Dmaven.test.skip=true
+#
+# # Stage 2: Run the app using a lightweight JDK image
+# FROM eclipse-temurin:17-jdk
+# WORKDIR /app
+# COPY --from=build /app/target/*.jar app.jar
+# ENTRYPOINT ["java", "-jar", "app.jar"]
 
 
