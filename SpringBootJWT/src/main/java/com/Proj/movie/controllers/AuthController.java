@@ -57,6 +57,7 @@ public class AuthController {
 
   @PostMapping("/login")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    try {
 
     Authentication authentication = authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -75,6 +76,16 @@ public class AuthController {
                          userDetails.getEmail(), 
                          roles));
   }
+    catch (Exception e) {
+      //  This will print the exact error in your Railway logs
+      e.printStackTrace();
+
+      return ResponseEntity
+              .status(500)
+              .body("Login failed: " + e.getMessage());
+    }
+  }
+
 
   @PostMapping("/signup")
   public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
