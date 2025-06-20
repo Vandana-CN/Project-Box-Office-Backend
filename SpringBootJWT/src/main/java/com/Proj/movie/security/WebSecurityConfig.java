@@ -18,6 +18,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.Proj.movie.security.jwt.AuthEntryPointJwt;
 import com.Proj.movie.security.jwt.AuthTokenFilter;
 
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -64,4 +67,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
   }
+
+
+  @Bean
+  public WebMvcConfigurer corsConfigurer() {
+    return new WebMvcConfigurer() {
+      @Override
+      public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("https://boxoffice.up.railway.app")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(true);
+      }
+    };
+  }
+
 }
