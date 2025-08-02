@@ -15,6 +15,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+//added the below 4 imports due to cors issue along with the code at the bottom
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.CorsConfigurationSource;
+import java.util.Arrays;
+
+
+
 import com.Proj.movie.security.jwt.AuthEntryPointJwt;
 import com.Proj.movie.security.jwt.AuthTokenFilter;
 
@@ -64,4 +72,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
   }
+
+
+//added the below code due to cors issue when i deployed frontend
+  @Bean
+  public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOrigins(Arrays.asList(
+            "https://boxoffice.up.railway.app",
+            "https://project-box-office-frontend-production.up.railway.app"
+    ));
+    configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    configuration.setAllowedHeaders(Arrays.asList("*"));
+    configuration.setAllowCredentials(true);
+
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
+  }
+
+
+
 }
