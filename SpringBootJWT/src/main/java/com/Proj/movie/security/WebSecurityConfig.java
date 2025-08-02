@@ -79,7 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(Arrays.asList(
+    configuration.setAllowedOriginPatterns(Arrays.asList(
             "https://boxoffice.up.railway.app",
             "https://project-box-office-frontend-production.up.railway.app"
     ));
