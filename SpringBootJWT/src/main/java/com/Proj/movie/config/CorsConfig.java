@@ -14,7 +14,8 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("https://boxoffice.up.railway.app",
+                        .allowedOrigins( "http://localhost:3000",
+                                "https://boxoffice.up.railway.app",
                                 "https://project-box-office-frontend-production.up.railway.app")
 
 
